@@ -1,0 +1,60 @@
+@require './post/link.styl'
+@require './post/title.styl'
+@require './vote-control/vote-control.styl'
+@require './colors.styl'
+
+.post-wrp
+	position relative
+	margin-top 5vh
+	margin-left auto
+	margin-right auto
+	width 90vw
+	max-width 720px
+	--delay: 100ms
+
+.single-wrp
+	position relative
+
+for num in (1..5)
+	.post:nth-child({num})
+		 animation-delay: 100ms * num
+
+.post
+	margin-bottom 50px
+	position relative
+	color $c-black
+	@extends $link
+	@extends $title
+	@extend $vote-control
+	opacity 0
+	will-change: transform
+	transform: translate3d(0, 30%, 0)
+	animation showing-up 0.2s $enter forwards
+
+	p
+		line-height: 1.6em
+
+	&:not(.single)
+		width: 100%
+
+	&.single
+		margin-left auto
+		margin-right auto
+		width: 90vw
+		max-width 700px
+
+	a > header,
+	div > header
+		margin-bottom: 20px
+
+	a > header,
+	div > header,
+	.post-body
+		padding-left: 45px
+
+	.comment-header
+		margin-top: 10px
+		padding: 10px 0 0
+		border-top: 1px solid rgba($c-black, 0.2)
+		color $c-black
+		font-size: 12px

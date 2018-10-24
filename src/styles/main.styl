@@ -1,0 +1,53 @@
+@require './colors.styl'
+@require './nav.styl'
+@require './normalize.styl'
+@require './modal'
+@require './form'
+@require './post'
+@require './comments/comments.styl'
+@require './comments/comment.styl'
+
+body,
+html
+	margin: 0
+	padding: 0
+	@extends $modal
+	@extends $form
+
+
+.tools
+	display flex
+	justify-content: space-between
+	max-width 720px
+	margin-right: auto
+	margin-left: auto
+	align-items center
+	margin-bottom 90px
+
+	> button
+		margin-left: 40px
+		padding: 0.5rem 1rem
+		font-weight: bolder
+		@extends $buttons
+
+
+
+.sorter
+	display flex
+	align-items center
+	width: 50%
+	max-width 140px
+	label
+		font-weight 900
+		margin-right 10px
+	select
+		height 30px
+		border 2px solid $c-black
+		color $c-black
+
+main
+	position: relative
+
+	> section
+		margin: 5vh auto
+		max-width: 90vw
