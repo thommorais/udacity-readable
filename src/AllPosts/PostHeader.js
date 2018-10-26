@@ -5,7 +5,7 @@ class PostHeader extends PureComponent{
 
   render(){
     const {post} = this.props
-    const {author, id, commentCount} = post
+    const {author, commentCount} = post
 
     return(
       <header>

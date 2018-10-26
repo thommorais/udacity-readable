@@ -31,7 +31,6 @@ export default function getAllPosts(state = [], action) {
             return update
         }
 
-
         case COMMENTS_COUNT: {
 
             const {updateComment} = action
@@ -40,7 +39,7 @@ export default function getAllPosts(state = [], action) {
                 if(post.id === updateComment.parentId) {
                     return {
                         ...post,
-                        commentCount: post.commentCount + updateComment.count
+                        commentCount: (post.commentCount ? post.commentCount : 0) + updateComment.count
                     }
                 }
                 return post

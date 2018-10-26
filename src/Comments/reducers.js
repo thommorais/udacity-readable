@@ -1,4 +1,4 @@
-import {GET_COMMENTS, ADD_COMMENT, UPDATE_COMMENT_VOTE, REMOVE_COMMENT, EDIT_COMMENT, COMMENTS_COUNT} from './actions'
+import {GET_COMMENTS, ADD_COMMENT, UPDATE_COMMENT_VOTE, REMOVE_COMMENT, EDIT_COMMENT} from './actions'
 
  export function comments(state = [], action) {
 
@@ -29,8 +29,12 @@ import {GET_COMMENTS, ADD_COMMENT, UPDATE_COMMENT_VOTE, REMOVE_COMMENT, EDIT_COM
 
       const {id, option} = action
       const update = state.map(comment => {
-          if(comment.id === id)
-              comment.voteScore = comment.voteScore + (option === 'downVote' ? -1 : 1)
+          if(comment.id === id){
+              return {
+                ...comment,
+                voteScore: comment.voteScore + (option === 'downVote' ? -1 : 1)
+              }
+          }
           return comment
       })
 

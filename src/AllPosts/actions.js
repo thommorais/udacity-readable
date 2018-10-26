@@ -64,14 +64,11 @@ const newPostAction = post => {
 }
 
 export function newPost(post){
-
     const url = `${api}/posts`
-
     return async(dispatch) => {
-        await dispatch(newPostAction(post))
         await addPost(url, post)
+        await dispatch(newPostAction(post))
     }
-
 }
 
 // remove post
