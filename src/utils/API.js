@@ -1,11 +1,5 @@
 import {headers} from '../enviroments'
 
-// export function getPosts(){
-//     return fetch(`${ api }posts`, {headers})
-//       .then(res => res.json())
-//       .catch(res => res)
-// }
-
 export function fetchPosts(url){
 
   return fetch(`${url}`, {headers})
@@ -25,6 +19,19 @@ export function addPost(url, data = {}, method = 'POST'){
   return fetch(url, options)
   .then(res => res.json)
   .then(res => res)
+
+}
+
+export function removePost(url){
+
+  const options = {
+    method:'DELETE',
+    headers
+  }
+
+  return fetch(url, options)
+  .then(res => res.json)
+  .then(data => data)
 
 }
 

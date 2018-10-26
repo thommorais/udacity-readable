@@ -1,4 +1,4 @@
-import { fetchPosts, addPost } from '../utils/API'
+import { fetchPosts, addPost, removePost } from '../utils/API'
 import { api } from '../enviroments'
 
 export const GET_ALL_POSTS = 'GET_ALL_POSTS'
@@ -7,6 +7,9 @@ export const GET_POST = 'GET_POST'
 export const IS_LOADING = 'IS_LOADING'
 export const UPDATE_POST_VOTE = 'UPDATE_POST_VOTE'
 export const NEW_POST = 'NEW_POST'
+export const EDIT_POST = 'EDIT_POST'
+export const REMOVE_POST = 'REMOVE_POST'
+export const COMMENTS_COUNT = 'COMMENTS_COUNT'
 
 export function isLoading(isLoading) {
     return {
@@ -31,8 +34,6 @@ export function getPosts(url = 'posts') {
         await dispatch(isLoading(true))
     }
 }
-
-
 
 // update comment vote
 const postVoteAction = (id, {option}) => {
@@ -71,4 +72,47 @@ export function newPost(post){
         await addPost(url, post)
     }
 
+}
+
+// remove post
+const removePostByIdAction = postID => {
+  return {
+    type: REMOVE_POST,
+    postID
+  }
+}
+
+
+export function removePostById(postId){
+    const url = `${api}/posts/${postId}`
+    return async(dispatch) => {
+        await dispatch(removePostByIdAction(postId))
+        await removePost(url)
+    }
+}
+
+// Edit Post
+const editPostAction = post => {
+  return {
+    type: EDIT_POST,
+    post
+  }
+}
+
+export function editPost(post){
+
+    const url = `${api}/posts/${post.id}`
+
+    return async(dispatch) => {
+        await addPost(url, post, 'PUT')
+        await dispatch(editPostAction(post))
+    }
+
+}
+
+export function updateCommentCount(updateComment) {
+    return {
+        type: COMMENTS_COUNT,
+        updateComment
+    }
 }

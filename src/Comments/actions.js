@@ -1,9 +1,11 @@
 import { api, } from '../enviroments'
-import { fetchPosts, addPost } from '../utils/API'
+import { fetchPosts, addPost, removePost } from '../utils/API'
 
 export const GET_COMMENTS = 'GET_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const UPDATE_COMMENT_VOTE = 'UPDATE_COMMENT_VOTE'
+export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 
 // load categories
 const getCommentsAction = comments => {
@@ -31,7 +33,6 @@ const createCommentAction = comment => {
   }
 }
 
-
 export function addComment(comment){
 
     const url = `${api}/comments`
@@ -41,7 +42,6 @@ export function addComment(comment){
         await dispatch(createCommentAction(comment))
     }
 }
-
 
 // // update comment vote
 const updateCommentVoteAction = ({option}, id) => {
@@ -61,4 +61,38 @@ export function updateCommentVote(vote, id){
         await dispatch(updateCommentVoteAction(vote, id))
     }
 
+}
+
+// remove comment
+const removeCommentAction = commentID => {
+  return {
+    type: REMOVE_COMMENT,
+    commentID
+  }
+}
+
+export function deleteComment(commentID){
+    const url = `${api}/comments/${commentID}`
+    return async(dispatch) => {
+        await dispatch(removeCommentAction(commentID))
+        await removePost(url)
+    }
+}
+
+// edit comment
+const editCommentAction = comment => {
+  return {
+    type: EDIT_COMMENT,
+    comment
+  }
+}
+
+export function editComment(comment){
+
+    const url = `${api}/comments/${comment.id}`
+
+    return async(dispatch) => {
+        await addPost(url, comment, 'PUT')
+        await dispatch(editCommentAction(comment))
+    }
 }

@@ -10,7 +10,7 @@ class PostSort extends Component {
     this.props.loadCats()
   }
 
-  setCat = (catName) => {
+  setCat = catName => {
      this.props.changeCat(catName)
   }
 

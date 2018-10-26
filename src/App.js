@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   filterById(posts, id) {
-    return posts.filter(post => post.id === id)
+    return posts.filter(post => post).filter(post => post.id === id)
   }
 
   setCat = (catName) => {

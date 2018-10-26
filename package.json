@@ -17,8 +17,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-css": "stylus -c src/styles/ --out ./src",
-    "watch-css": "npm run build-css && stylus -c -w src/styles/ --out ./src"
+    "build-css": "stylus -c src/styles/main.styl --out ./src",
+    "watch-css": "npm run build-css && stylus -c -w src/styles/main.styl --out ./src"
   },
   "eslintConfig": {
     "extends": "react-app"

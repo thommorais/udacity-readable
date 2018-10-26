@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import combinedReducers from './combinedReducers'
 import App from './App'
-import style from './main.css'
+import './main.css'
 
 const logger = store => next => action => {
   console.group(action.type)
@@ -22,7 +22,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   combinedReducers,
   composeEnhancers(
-    applyMiddleware(thunkMiddleware)
+    applyMiddleware(thunkMiddleware, logger)
   )
 )
 

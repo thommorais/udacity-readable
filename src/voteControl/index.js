@@ -35,9 +35,9 @@ class voteControl extends PureComponent {
 
     return (
         <div className={`vote-control ${type}`}>
-            <button type="button" className="voteUp" onClick={() => this.updateVote(1)}>+</button>
+            <button type="button" className="voteUp" onClick={() => this.updateVote(1)}>▲</button>
             <span>{currentCount}</span>
-            <button type="button" className="voteDown" onClick={() => this.updateVote(-1)}>-</button>
+            <button type="button" className="voteDown" onClick={() => this.updateVote(-1)}>▼</button>
         </div>
     )
   }

@@ -11,9 +11,10 @@ body,
 html
 	margin: 0
 	padding: 0
+
+body
 	@extends $modal
 	@extends $form
-
 
 .tools
 	display flex
@@ -29,8 +30,6 @@ html
 		padding: 0.5rem 1rem
 		font-weight: bolder
 		@extends $buttons
-
-
 
 .sorter
 	display flex
@@ -51,3 +50,15 @@ main
 	> section
 		margin: 5vh auto
 		max-width: 90vw
+
+
+.post-tools
+	padding-left: 45px
+
+	button
+		height: 30px
+		width: 30px
+		border: 1px solid #000
+		border-radius: 5px
+		margin-right: 10px
+		@extends $buttons

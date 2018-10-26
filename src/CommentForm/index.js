@@ -1,45 +1,42 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { addComment } from '../Comments/actions'
+import { addComment, editComment } from '../Comments/actions'
+import {updateCommentCount} from '../AllPosts/actions'
 
-class CommentForm extends Component {
+class CommentForm extends PureComponent {
 
   state = {
     createComment : false,
     author: '',
-    comment: ''
+    body: ''
   }
 
-  handleName = (event) =>{
-    // if(!target || !target.value ) return
+  handleName = event =>{
     this.setState({author: event.target.value})
   }
 
-  handleComment = (event) =>{
-    // if(!target || !target.value ) return
+  handleComment = event =>{
     this.setState({body: event.target.value})
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
+
     event.preventDefault()
 
-    const {author, body} = this.state
-    const parentId = this.props.id
-    const id = Math.random().toString(24).substr(2, 24)
+    const {author, body, id, mode, parentId, voteScore} = this.state
 
-    this.props.addComment({
+    this.props[mode]({
       author,
       body,
-      id,
       parentId,
-      voteScore: 0,
-      timestamp : Date.now()
+      voteScore: voteScore || 0,
+      timestamp : Date.now(),
+      id: id || Math.random().toString(24).substr(2, 24),
     })
 
-    this.setState( () => ({
-      author : '',
-      body : ''
-    }))
+    this.setState( () => ({ author:'', body:'' }), () => this.props.closer())
+
+    this.props.updateCommentCount({parentId, count: 1})
 
   }
 
@@ -48,37 +45,57 @@ class CommentForm extends Component {
     this.setState({createComment})
   }
 
+  componentDidMount(){
+
+    const {comment, mode} = this.props
+    const parentId = this.props.id || comment.parentId
+
+    if(comment){
+
+      const {body, id, author, voteScore } = comment
+
+      this.setState({
+        body,
+        author,
+        voteScore,
+        id: id || Math.random().toString(24).substr(2, 24)
+      })
+
+    }
+
+    this.setState({mode, parentId})
+
+  }
+
   render(){
 
-    const {createComment, author, body} = this.state
+    const {author, body} = this.state
 
-    if(!createComment)
-      return <button type="button" onClick={this.createComment}>ok, share your amazing opinion</button>
-    else
-       return <form onSubmit={this.handleSubmit}>
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <div className="field">
+          <label htmlFor="author">Author</label>
+          <input type="text" defaultValue={author} id="author" name="author" onChange={this.handleName} />
+        </div>
+        <div className="field">
+          <label htmlFor="comment">Comment</label>
+          <textarea id="Comment" onChange={this.handleComment} value={body}></textarea>
+        </div>
+        <div className="field">
+          <button type="submit" disabled={!author || !body}>Enviar</button>
+        </div>
+      </form>
+    )
 
-         <div className="field">
-           <label htmlFor="author">Author</label>
-           <input type="text" value={author} id="author" name="author" onChange={this.handleName} />
-         </div>
-
-         <div className="field">
-           <label htmlFor="comment">Comment</label>
-           <textarea id="Comment" onChange={this.handleComment} value={body}></textarea>
-         </div>
-
-         <div className="field">
-           <button type="submit" disabled={!author || !body}>Enviar</button>
-         </div>
-
-       </form>
   }
 
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addComment: comment => dispatch(addComment(comment))
+    addComment: comment => dispatch(addComment(comment)),
+    editComment: comment => dispatch(editComment(comment)),
+    updateCommentCount: updateComment =>  dispatch(updateCommentCount(updateComment))
   }
 }
 
