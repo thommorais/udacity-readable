@@ -7,6 +7,7 @@ const config = require('./config')
 const categories = require('./categories')
 const posts = require('./posts')
 const comments = require('./comments')
+const path = require('path')
 
 const app = express()
 
@@ -314,6 +315,10 @@ app.delete('/comments/:id', (req, res) => {
           }
       )
 })
+
+app.use(express.static('build'))
+
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'build/index.html')) )
 
 app.listen(config.port, () => {
   console.log('Server listening on port %s, Ctrl+C to stop', config.port)
